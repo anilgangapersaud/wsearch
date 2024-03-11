@@ -5,6 +5,12 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { WikipediaService } from './wikipedia.service';
 import { CommonModule } from '@angular/common';
 
+interface Pages {
+  pageid: number;
+  title: string; 
+  snippet: string;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,15 +20,14 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
 
-  pages = [];
+  pages: Pages[] = [];
 
   constructor(private wikipedia: WikipediaService) {}
   
   onTerm(term: string) {
-    this.wikipedia.search(term).subscribe((res: any) => {
-      this.pages = res.query.search;
+    this.wikipedia.search(term).subscribe((pages) => {
+      this.pages = pages;
     })
   }
-
   
 }
